@@ -4,3 +4,5 @@ randgen.o : randgen.c
 	gcc -c randgen.c
 run :
 	./randtest
+clear :
+	rm randtest
