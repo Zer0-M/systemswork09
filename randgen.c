@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include "randgen.h"
 int randnum(){
     int fd=open("/dev/random",O_RDONLY);
     int randno[1];
