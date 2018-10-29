@@ -4,22 +4,27 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-
-int main(){
+int randnum(){
     int fd=open("/dev/random",O_RDONLY);
-    int randnums[10];
-    int bytesread=read(fd,randnums,sizeof(randnums));
+    int randno[1];
+    int bytesread=read(fd,randno,sizeof(int));
     if(bytesread<0){
         printf("%s\n",strerror(errno));
     }
+
+    close(fd);
+    return randno[0];
+}
+int main(){
+    int randnums[10];
     for(int i=0;i<10;i++){
+        randnums[i]=randnum();
         printf("random number %d = %d\n",i,randnums[i]);
     }
-    close(fd);
-
+    
     printf("\nWriting numbers to the randnums file...\n\n");
     int wfd=open("./randnums",O_WRONLY|O_CREAT);
-    bytesread=write(wfd,randnums,sizeof(randnums));
+    int bytesread=write(wfd,randnums,sizeof(randnums));
     if(bytesread<0){
         printf("%s\n",strerror(errno));
     }
